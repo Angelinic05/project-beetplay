@@ -1,0 +1,47 @@
+CREATE TABLE cuerpotecnico(
+idtecnico INT(10) PRIMARY KEY AUTO_INCREMENT,
+cargo VARCHAR(30) NOT NULL,
+nombre VARCHAR(30) NOT NULL,
+apellido VARCHAR(30) NOT NULL,
+fecha_nac DATE NOT NULL,
+federacion VARCHAR(60) NOT NULL);
+
+CREATE TABLE equipo(
+idequipo INT(10) PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(30) NOT NULL,
+idtecnico INT(10),
+CONSTRAINT FK_tecequi FOREIGN KEY (idtecnico) REFERENCES cuerpotecnico(idtecnico));
+
+CREATE TABLE cuerpomedico(
+idmedico INT(10) PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(30) NOT NULL,
+apellido VARCHAR(30) NOT NULL,
+fecha_nac DATE NOT NULL,
+titulacion VARCHAR(60) NOT NULL,
+anos_experiencia INT(5) NOT NULL);
+
+CREATE TABLE estadistica(
+idestadistica INT(10) PRIMARY KEY AUTO_INCREMENT,
+goles INT(20) NOT NULL,
+Tarjeta_amarilla INT(2) NOT NULL,
+Trajeta_roja INT(2) NOT NULL);
+
+CREATE TABLE jugador(
+idjugador INT(10) PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(30) NOT NULL,
+apellido VARCHAR(30) NOT NULL,
+fecha_nac DATE NOT NULL,
+Dorsal INT(20) NOT NULL,
+posicion VARCHAR(40) NOT NULL,
+fecha_ingreso DATE,
+idestadistica INT(10),
+idequipo INT(10),
+CONSTRAINT FK_equipojuga FOREIGN KEY (idequipo) REFERENCES equipo(idequipo),
+CONSTRAINT FK_estadisticajuga FOREIGN KEY (idestadistica) REFERENCES estadistica(idestadistica));
+
+CREATE TABLE equipo_medico(
+idequ_med INT(10) PRIMARY KEY AUTO_INCREMENT,
+idequipo INT(10),
+idcuerpomedico INT(10),
+CONSTRAINT FK_equipomed FOREIGN KEY (idequipo) REFERENCES equipo(idequipo),
+CONSTRAINT FK_medquipo FOREIGN KEY (idcuerpomedico) REFERENCES cuerpomedico(idmedico));

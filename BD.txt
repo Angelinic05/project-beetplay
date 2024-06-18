@@ -1,0 +1,95 @@
+CREATE DATABASE beetplay;
+use beetplay
+
+CREATE TABLE pais(
+	id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL);
+
+CREATE TABLE region(
+	id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
+	id_pais INT(10),
+	CONSTRAINT FK_regionpais FOREIGN KEY (id_pais) REFERENCES pais(id));
+
+CREATE TABLE ciudad(
+	id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
+	id_region INT(10),
+	CONSTRAINT FK_ciudadregion FOREIGN KEY (id_region) REFERENCES region(id));
+
+CREATE TABLE persona(
+	id VARCHAR(20) PRIMARY KEY NOT NULL,
+	nombre VARCHAR(50) NOT NULL,
+	apellido VARCHAR(50) NOT NULL,
+	edad INT(3) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	id_ciudad INT(10),
+	CONSTRAINT FK_ciudadpersona FOREIGN KEY (id_ciudad) REFERENCES ciudad(id));
+
+CREATE TABLE posicion(
+	id INT(10) PRIMARY KEY NOT NULL,
+	descripcion VARCHAR(50) NOT NULL);
+
+CREATE TABLE rol(
+	id INT(10) PRIMARY KEY NOT NULL,
+	nombre VARCHAR(50) NOT NULL);
+
+CREATE TABLE equipo(
+	id INT(10) PRIMARY KEY NOT NULL,
+	nombre VARCHAR(50) NOT NULL,
+	fechafundacion DATE NOT NULL,
+	fechaultimotitulo DATE NOT NULL,
+	id_ciudad INT(10),
+	CONSTRAINT FK_ciudadequipo FOREIGN KEY (id_ciudad) REFERENCES ciudad(id));
+
+CREATE TABLE cuerpotecnico(
+	id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	idespecialidad INT(10) NOT NULL,
+	titulo VARCHAR(100) NOT NULL,
+	fechatitulo DATE NOT NULL,
+	id_persona VARCHAR(20),
+	id_rol INT(10),
+	CONSTRAINT FK_personatecnico FOREIGN KEY (id_persona) REFERENCES persona(id),
+	CONSTRAINT FK_roltecnico FOREIGN KEY (id_rol) REFERENCES rol(id));
+
+
+CREATE TABLE jugador(
+	id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	dorsal VARCHAR(3) NOT NULL,
+	id_posicion INT(10),
+	id_persona VARCHAR(20),
+	CONSTRAINT FK_personajugador FOREIGN KEY (id_persona) REFERENCES persona(id),
+	CONSTRAINT FK_posicionjugador FOREIGN KEY (id_posicion) REFERENCES posicion(id));
+
+
+CREATE TABLE plantel(
+	id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	id_equipo INT(10),
+	id_persona VARCHAR(20),
+	CONSTRAINT FK_personaplantel FOREIGN KEY (id_persona) REFERENCES persona(id),
+	CONSTRAINT FK_equipoplantel FOREIGN KEY (id_equipo) REFERENCES equipo(id));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
