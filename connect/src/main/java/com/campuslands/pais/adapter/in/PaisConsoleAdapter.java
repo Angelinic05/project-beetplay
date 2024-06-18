@@ -7,7 +7,7 @@ import com.campuslands.pais.application.PaisService;
 import com.campuslands.pais.domain.Pais;
 
 public class PaisConsoleAdapter {
-     private final PaisService paisService;
+    private final PaisService paisService;
 
     public PaisConsoleAdapter(PaisService paisService) {
         this.paisService = paisService;
